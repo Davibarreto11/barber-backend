@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 
-// import Notification from "../../../modules/notifications/infra/typeorm/schemas/Notification";
+import Notification from "../../../modules/notifications/infra/typeorm/schemas/Notification";
 
 export const AppDataSource = new DataSource({
   type: "mongodb",
@@ -8,7 +8,7 @@ export const AppDataSource = new DataSource({
   port: 27017,
   database: "database",
   useUnifiedTopology: true,
-  // entities: [Notification],
+  entities: [Notification],
 });
 
 AppDataSource.initialize()

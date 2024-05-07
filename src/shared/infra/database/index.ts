@@ -1,8 +1,8 @@
 import { DataSource } from "typeorm";
 
-// import Appointment from "../../../modules/appointments/infra/typeorm/entities/Appointment";
-// import User from "../../../modules/users/infra/typeorm/entities/User";
-// import UserToken from "../../../modules/users/infra/typeorm/entities/UserToken";
+import Appointment from "../../../modules/appointments/infra/typeorm/entities/Appointment";
+import User from "../../../modules/users/infra/typeorm/entities/User";
+import UserToken from "../../../modules/users/infra/typeorm/entities/UserToken";
 
 // import { CreateUsers1696019680697 } from './migrations/1695019680691-CreateUsers'
 import { CreateAppointments1695957180602 } from "./migrations/1696009232692-CreateAppointments";
@@ -19,7 +19,7 @@ export const AppDataSource = new DataSource({
   database: "database",
   synchronize: false,
   logging: false,
-  // entities: [Appointment, User, UserToken],
+  entities: [Appointment, User, UserToken],
   migrations: [
     // CreateUsers1696019680697
     CreateAppointments1695957180602,
