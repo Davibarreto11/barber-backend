@@ -1,0 +1,25 @@
+version: "3"
+services:
+  postgres-db:
+    image: bitnami/postgresql:latest
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: database
+    ports:
+      - "5432:5432"
+    volumes:
+      - /init.sql
+
+  mongo-db:
+    image: mongo
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+
+  redis-db:
+    image: redis:alpine
+    container_name: redis-db
+    ports:
+      - "6379:6379"
