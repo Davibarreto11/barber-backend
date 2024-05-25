@@ -7,7 +7,6 @@ import type Appointment from "../infra/typeorm/entities/Appointment";
 
 import IAppointmentRepository from "../repositories/IAppointmentsRepository";
 import INotifcationRepository from "../../../modules/notifications/repositories/INotificationRepository";
-import ICacheProvider from "../../../shared/container/providers/CacheProvider/models/ICacheProvider";
 
 interface IRequest {
   provider_id: string;
@@ -22,10 +21,7 @@ class CreateBetService {
     private readonly appointmentsRepository: IAppointmentRepository,
 
     @inject("NotificationsRepository")
-    private readonly notificationsRepository: INotifcationRepository,
-
-    @inject("CacheProvider")
-    private readonly cacheProvider: ICacheProvider
+    private readonly notificationsRepository: INotifcationRepository
   ) {}
 
   public async execute({
