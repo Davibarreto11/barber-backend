@@ -3,11 +3,11 @@ import type User from "../infra/typeorm/entities/User";
 
 import AppError from "../../../shared/errors/AppError";
 
-import ICacheProvider from "../../../shared/container/providers/CacheProvider/models/ICacheProvider";
 import IUsersRepository from "../repositories/IUsersRepository";
 import IHashProvider from "../providers/HashProvider/models/IHashProvider";
 
 interface IRequest {
+  barber: boolean;
   name: string;
   email: string;
   password: string;
@@ -20,14 +20,15 @@ class CreateUserService {
     private readonly usersRepository: IUsersRepository,
 
     @inject("HashProvider")
-    private readonly hashProvider: IHashProvider,
-
-    @inject("CacheProvider")
-    private readonly cacheProvider: ICacheProvider
+    private readonly hashProvider: IHashProvider
   ) {}
 
-  async execute({ name, email, password }: IRequest): Promise<User> {
+  async execute({ name, barber, email, password }: IRequest): Promise<User> {
     const checkUserExists = await this.usersRepository.findByEmail(email);
+
+    if (!barber) {
+      barber = false;
+    }
 
     if (checkUserExists) {
       throw new AppError("Email address already used");
@@ -36,12 +37,11 @@ class CreateUserService {
     const hasgedPassword = await this.hashProvider.generateHash(password);
 
     const user = await this.usersRepository.create({
+      barber,
       name,
       email,
       password: hasgedPassword,
     });
-
-    await this.cacheProvider.invalidate("providers-list:*");
 
     return user;
   }

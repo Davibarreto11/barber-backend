@@ -1,29 +1,34 @@
-import { Router } from 'express'
-import { celebrate, Segments, Joi } from 'celebrate'
-import multer from 'multer'
-import uploadConfig from '../../../../../config/upload'
+import { Router } from "express";
+import { celebrate, Segments, Joi } from "celebrate";
+import multer from "multer";
+import uploadConfig from "../../../../../config/upload";
 
-import ensureAuthenticated from '../middlewares/ensureAuthenticated'
+import ensureAuthenticated from "../middlewares/ensureAuthenticated";
 
-import UsersController from '../controllers/UsersController'
-import UserAvatarController from '../controllers/UserAvatarController'
+import UsersController from "../controllers/UsersController";
+import UserAvatarController from "../controllers/UserAvatarController";
 
-const usersRouter = Router()
-const upload = multer(uploadConfig)
+const usersRouter = Router();
+const upload = multer(uploadConfig);
 
-usersRouter.post('/', celebrate({
-  [Segments.BODY]: {
-    name: Joi.string().required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().required()
-  }
-}), UsersController.create)
+usersRouter.post(
+  "/",
+  celebrate({
+    [Segments.BODY]: {
+      barber: Joi.boolean().required(),
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+  }),
+  UsersController.create
+);
 
 usersRouter.patch(
-  '/avatar',
+  "/avatar",
   ensureAuthenticated,
-  upload.single('avatar'),
+  upload.single("avatar"),
   UserAvatarController.update
-)
+);
 
-export default usersRouter
+export default usersRouter;
