@@ -1,6 +1,6 @@
 # App GoBarber
 
-Aplcação para cabeleireiros acompanherem seus clientes diários e clientes que desejem agendar 
+Aplcação para cabeleireiros acompanherem seus clientes diários e clientes que desejem agendar
 
 ## 🚀 Começando
 
@@ -13,7 +13,6 @@ Use o comando de com o inicializador do seu gerenciador de pacotes (NPM START ou
 
 Node.js
 PostgresSQL
-Redis
 MongoDB
 
 ### 🔧 Instalação
@@ -30,12 +29,11 @@ Depois nas pastas inicilaize com o comando escrito no package.json
 
 Mencione as ferramentas que você usou para criar seu projeto
 
-* [ReactJS](https://legacy.reactjs.org/) - O framework web usado
-* [React Native](https://reactnative.dev/) - O framework mobile usado
-* [Node.js](https://nodejs.org/en) - Gerente de Dependência
-* [MongoDB](https://www.mongodb.com/try/download/community) - Usada para armazenar as notificações
-* [Redis](https://redis.io) - Usada como cache
-* [PostgresSQL](https://www.postgresql.org) - Usada como banco de dados
+- [ReactJS](https://legacy.reactjs.org/) - O framework web usado
+- [Node.js](https://nodejs.org/en) - Gerente de Dependência
+- [MongoDB](https://www.mongodb.com/try/download/community) - Usada para armazenar as notificações
+- [PostgresSQL](https://www.postgresql.org) - Usada como banco de dados
 
 ---
+
 ⌨️ com ❤️ por [Davi Barreto](https://github.com/Davibarreto11) 😊
