@@ -1,5 +1,3 @@
-import { injectable, inject } from "tsyringe";
-
 import type Appointment from "../infra/typeorm/entities/Appointment";
 
 import IAppointmentRepository from "../repositories/IAppointmentsRepository";
@@ -12,10 +10,8 @@ interface IRequest {
   year: number;
 }
 
-@injectable()
 class ListProviderAppointmentsService {
   constructor(
-    @inject("AppointmentsRepository")
     private readonly appointmentsRepository: IAppointmentRepository
   ) {}
 

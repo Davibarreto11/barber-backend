@@ -1,15 +1,19 @@
-import { Router } from 'express'
-import { celebrate, Segments, Joi } from 'celebrate'
+import { Router } from "express";
+import { celebrate, Segments, Joi } from "celebrate";
+import { UserFactory } from "../../typeorm/factorys/UserFactory";
 
-import SessionsController from '../controllers/SessionsController'
+const sessionsRouter = Router();
 
-const sessionsRouter = Router()
+sessionsRouter.post(
+  "/",
+  celebrate({
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+  }),
+  (request, response) =>
+    UserFactory().sessionController.create(request, response)
+);
 
-sessionsRouter.post('/', celebrate({
-  [Segments.BODY]: {
-    email: Joi.string().email().required(),
-    password: Joi.string().required()
-  }
-}), SessionsController.create)
-
-export default sessionsRouter
+export default sessionsRouter;

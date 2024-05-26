@@ -1,4 +1,3 @@
-import { injectable, inject } from "tsyringe";
 import { isAfter, addHours } from "date-fns";
 
 import AppError from "../../../shared/errors/AppError";
@@ -12,16 +11,12 @@ interface IRequest {
   password: string;
 }
 
-@injectable()
 class ResetPasswordService {
   constructor(
-    @inject("UsersRepository")
     private readonly usersRepository: IUsersRepository,
 
-    @inject("UsersTokenRepository")
     private readonly usersTokenRepository: IUserTokenRepository,
 
-    @inject("HashProvider")
     private readonly hashProvider: IHashProvider
   ) {}
 

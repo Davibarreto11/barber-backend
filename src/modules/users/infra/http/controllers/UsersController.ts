@@ -1,25 +1,27 @@
-import { type Request, type Response } from "express";
-import { container } from "tsyringe";
+import { Request, Response } from "express";
 
 import { classToPlain } from "class-transformer";
 
-import CreateUserService from "../../../services/CreateUsersServiece";
+import CreateUserService from "../../../services/CreateUsersService";
 
 class UsersController {
+  constructor(private createUser: CreateUserService) {}
   public async create(request: Request, response: Response): Promise<Response> {
     const { name, email, password, barber } = request.body;
 
-    const createUser = container.resolve(CreateUserService);
+    try {
+      const user = await this.createUser.execute({
+        barber,
+        name,
+        email,
+        password,
+      });
 
-    const user = await createUser.execute({
-      barber,
-      name,
-      email,
-      password,
-    });
-
-    return response.json(classToPlain(user));
+      return response.json(classToPlain(user));
+    } catch (err) {
+      return response.json(err);
+    }
   }
 }
 
-export default new UsersController();
+export default UsersController;

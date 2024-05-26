@@ -1,4 +1,3 @@
-import { injectable, inject } from "tsyringe";
 import { startOfHour, isBefore, getHours, format } from "date-fns";
 
 import AppError from "../../../shared/errors/AppError";
@@ -14,13 +13,10 @@ interface IRequest {
   date: Date;
 }
 
-@injectable()
 class CreateBetService {
   constructor(
-    @inject("AppointmentsRepository")
     private readonly appointmentsRepository: IAppointmentRepository,
 
-    @inject("NotificationsRepository")
     private readonly notificationsRepository: INotifcationRepository
   ) {}
 
