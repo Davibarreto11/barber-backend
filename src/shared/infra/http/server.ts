@@ -15,7 +15,6 @@ import AppError from "../../errors/AppError";
 
 import "../database";
 import "../mongodb";
-import "../../container";
 
 const app = express();
 

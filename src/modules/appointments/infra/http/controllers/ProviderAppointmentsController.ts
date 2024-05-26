@@ -1,23 +1,27 @@
-import { type Request, type Response } from 'express'
-import { container } from 'tsyringe'
+import { type Request, type Response } from "express";
 
-import ListProviderAppointmentsService from '../../../../../modules/appointments/services/ListProviderAppointmentsService'
-import { classToPlain } from 'class-transformer'
+import ListProviderAppointmentsService from "../../../../../modules/appointments/services/ListProviderAppointmentsService";
+import { classToPlain } from "class-transformer";
 
 export default class ProviderAppointmentsController {
-  public async index (request: Request, response: Response): Promise<Response> {
-    const provider_id = request.user.id
-    const { day, month, year } = request.query
+  constructor(
+    private listProviderAppointments: ListProviderAppointmentsService
+  ) {}
+  public async index(request: Request, response: Response): Promise<Response> {
+    const provider_id = request.user.id;
+    const { day, month, year } = request.query;
 
-    const listProviderAppointments = container.resolve(ListProviderAppointmentsService)
+    try {
+      const appointments = await this.listProviderAppointments.execute({
+        provider_id,
+        day: Number(day),
+        month: Number(month),
+        year: Number(year),
+      });
 
-    const appointments = await listProviderAppointments.execute({
-      provider_id,
-      day: Number(day),
-      month: Number(month),
-      year: Number(year)
-    })
-
-    return response.json(classToPlain(appointments))
+      return response.json(classToPlain(appointments));
+    } catch (err) {
+      return response.json(err);
+    }
   }
 }
