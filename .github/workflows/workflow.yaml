@@ -3,7 +3,7 @@ name: Barber-Integration
 on:
   pull_request:
     branches:
-      ['main']
+      - main
 
 jobs:
   Barber-Integration:
@@ -13,10 +13,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Using-Node.js
         uses: actions/setup-node@v3
-        with: 
-          node-version: 20.
-        - name: run install, build and test
-          run:
-            npm i
-            npm run build
-            npm run test
+        with:
+          node-version: '20'
+      - name: run install, build and test
+        run: |
+          npm i
+          npm run build
+          npm run test
