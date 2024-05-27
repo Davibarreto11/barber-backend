@@ -66,10 +66,6 @@ class CreateBetService {
       content: `Novo agendamento para dia ${dateFormated}`,
     });
 
-    // await this.cacheProvider.invalidate(
-    //   `provider-appointments:${provider_id}:${format(appointmentDate, 'yyyy-M-d')}`
-    // )
-
     return appointment;
   }
 }
