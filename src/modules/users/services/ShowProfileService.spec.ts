@@ -1,40 +1,40 @@
-import AppError from '../../../shared/errors/AppError'
+import AppError from "../../../shared/errors/AppError";
 
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository'
+import FakeUsersRepository from "../repositories/fakes/FakeUsersRepository";
 
-import ShowProfileService from './ShowProfileService'
+import ShowProfileService from "./ShowProfileService";
 
-let fakeUsersRepository: FakeUsersRepository
-let showProfileService: ShowProfileService
+let fakeUsersRepository: FakeUsersRepository;
+let showProfileService: ShowProfileService;
 
-describe('', () => {
+describe("", () => {
   beforeEach(() => {
-    fakeUsersRepository = new FakeUsersRepository()
+    fakeUsersRepository = new FakeUsersRepository();
 
-    showProfileService = new ShowProfileService(
-      fakeUsersRepository
-    )
-  })
+    showProfileService = new ShowProfileService(fakeUsersRepository);
+  });
 
-  test('Should be able show the profile', async () => {
+  test("Should be able show the profile", async () => {
     const user = await fakeUsersRepository.create({
-      name: 'Davi Artur',
-      email: 'davi@gmail.com',
-      password: '123456'
-    })
+      barber: false,
+      name: "Davi Artur",
+      email: "davi@gmail.com",
+      password: "123456",
+    });
 
     const profile = await showProfileService.execute({
-      user_id: user.id
-    })
+      user_id: user.id,
+    });
 
-    expect(profile.name).toBe('Davi Artur')
-    expect(profile.email).toBe('davi@gmail.com')
-  })
+    expect(profile.name).toBe("Davi Artur");
+    expect(profile.email).toBe("davi@gmail.com");
+  });
 
-  test('Should not be able show the profile from non existing user', async () => {
-    await expect(showProfileService.execute({
-      user_id: 'non-existing'
-    })
-    ).rejects.toBeInstanceOf(AppError)
-  })
-})
+  test("Should not be able show the profile from non existing user", async () => {
+    await expect(
+      showProfileService.execute({
+        user_id: "non-existing",
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
+});

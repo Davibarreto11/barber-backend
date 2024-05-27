@@ -1,4 +1,3 @@
-import { injectable, inject } from "tsyringe";
 import { isAfter, addHours } from "date-fns";
 
 import AppError from "../../../shared/errors/AppError";
@@ -12,16 +11,12 @@ interface IRequest {
   password: string;
 }
 
-@injectable()
 class ResetPasswordService {
   constructor(
-    @inject("UsersRepository")
     private readonly usersRepository: IUsersRepository,
 
-    @inject("UsersTokenRepository")
     private readonly usersTokenRepository: IUserTokenRepository,
 
-    @inject("HashProvider")
     private readonly hashProvider: IHashProvider
   ) {}
 
@@ -29,19 +24,19 @@ class ResetPasswordService {
     const userToken = await this.usersTokenRepository.findByToken(token);
 
     if (!userToken) {
-      throw new AppError("User token does not exists");
+      throw new AppError("Token de usuário não existe");
     }
     const user = await this.usersRepository.findById(userToken.user_id);
 
     if (!user) {
-      throw new AppError("User token does not exists");
+      throw new AppError("Token de usuário não existe");
     }
 
     const tokenCreatedAt = userToken.created_at;
     const compareDate = addHours(tokenCreatedAt, 2);
 
     if (isAfter(Date.now(), compareDate)) {
-      throw new AppError("Token expired");
+      throw new AppError("Expirou o token");
     }
 
     user.password = await this.hashProvider.generateHash(password);

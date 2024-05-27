@@ -1,4 +1,3 @@
-import { injectable, inject } from "tsyringe";
 import { startOfHour, isBefore, getHours, format } from "date-fns";
 
 import AppError from "../../../shared/errors/AppError";
@@ -14,13 +13,10 @@ interface IRequest {
   date: Date;
 }
 
-@injectable()
 class CreateBetService {
   constructor(
-    @inject("AppointmentsRepository")
     private readonly appointmentsRepository: IAppointmentRepository,
 
-    @inject("NotificationsRepository")
     private readonly notificationsRepository: INotifcationRepository
   ) {}
 
@@ -32,16 +28,18 @@ class CreateBetService {
     const appointmentDate = startOfHour(date);
 
     if (isBefore(appointmentDate, Date.now())) {
-      throw new AppError("You can't create an appointment on past date.");
+      throw new AppError(
+        "Você não podde criar um compromisso em uma data que já passou."
+      );
     }
 
     if (user_id === provider_id) {
-      throw new AppError("You can't create an appointment with yourself.");
+      throw new AppError("VoCê não pode fazer uma compromisso com você mesmo.");
     }
 
     if (getHours(appointmentDate) < 8 || getHours(appointmentDate) > 18) {
       throw new AppError(
-        "You can only create appointements between 8am and 18pm."
+        "Você pode criar somente compromisso entre 8am e 18pm."
       );
     }
 
@@ -52,7 +50,7 @@ class CreateBetService {
       );
 
     if (findAppointmentInSameDate) {
-      throw new AppError("This appointment is already booked");
+      throw new AppError("Este compromisso já está agendado");
     }
 
     const appointment = await this.appointmentsRepository.create({
@@ -67,10 +65,6 @@ class CreateBetService {
       recipient_id: provider_id,
       content: `Novo agendamento para dia ${dateFormated}`,
     });
-
-    // await this.cacheProvider.invalidate(
-    //   `provider-appointments:${provider_id}:${format(appointmentDate, 'yyyy-M-d')}`
-    // )
 
     return appointment;
   }

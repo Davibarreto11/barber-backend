@@ -1,5 +1,3 @@
-import { injectable, inject } from "tsyringe";
-
 import IUserRepository from "../../../modules/users/repositories/IUsersRepository";
 
 import type User from "../../../modules/users/infra/typeorm/entities/User";
@@ -8,12 +6,8 @@ interface IRequest {
   user_id: string;
 }
 
-@injectable()
 class ListProvidersService {
-  constructor(
-    @inject("UsersRepository")
-    private readonly usersRepository: IUserRepository
-  ) {}
+  constructor(private readonly usersRepository: IUserRepository) {}
 
   public async execute({ user_id }: IRequest): Promise<User[]> {
     const users = await this.usersRepository.findAllProviders({

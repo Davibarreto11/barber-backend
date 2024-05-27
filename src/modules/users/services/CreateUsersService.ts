@@ -1,4 +1,3 @@
-import { injectable, inject } from "tsyringe";
 import type User from "../infra/typeorm/entities/User";
 
 import AppError from "../../../shared/errors/AppError";
@@ -13,25 +12,18 @@ interface IRequest {
   password: string;
 }
 
-@injectable()
 class CreateUserService {
   constructor(
-    @inject("UsersRepository")
     private readonly usersRepository: IUsersRepository,
 
-    @inject("HashProvider")
     private readonly hashProvider: IHashProvider
   ) {}
 
   async execute({ name, barber, email, password }: IRequest): Promise<User> {
     const checkUserExists = await this.usersRepository.findByEmail(email);
 
-    if (!barber) {
-      barber = false;
-    }
-
     if (checkUserExists) {
-      throw new AppError("Email address already used");
+      throw new AppError("Email já está em uso!");
     }
 
     const hasgedPassword = await this.hashProvider.generateHash(password);
