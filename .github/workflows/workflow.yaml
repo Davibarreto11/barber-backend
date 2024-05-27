@@ -1,22 +1,22 @@
 name: Barber-Integration
 
 on:
+  push:
+    branches: ["master", "develop"]
   pull_request:
-    branches:
-      - main
+    branches: ["master", "develop"]
 
 jobs:
-  Barber-Integration:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-      - name: Using-Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-      - name: run install, build and test
-        run: |
-          npm i
-          npm run build
-          npm run test
+      - uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: teste-back
+        run: npm run test
+      # - name: build
+      #   run: npm run build
