@@ -22,11 +22,8 @@ class CreateUserService {
   async execute({ name, barber, email, password }: IRequest): Promise<User> {
     const checkUserExists = await this.usersRepository.findByEmail(email);
 
-    if (!barber) {
-    }
-
     if (checkUserExists) {
-      throw new AppError("Email address already used");
+      throw new AppError("Email já está em uso!");
     }
 
     const hasgedPassword = await this.hashProvider.generateHash(password);
