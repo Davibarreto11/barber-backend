@@ -2,9 +2,9 @@ name: Barber-Integration
 
 on:
   push:
-    branches: ["master", "workflow_config"]
+    branches: ["main", "workflow_config"]
   pull_request:
-    branches: ["master", "develop"]
+    branches: ["main"]
 
 jobs:
   build:
