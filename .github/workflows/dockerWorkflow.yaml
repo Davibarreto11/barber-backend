@@ -25,14 +25,23 @@ jobs:
         username: matheuswenes
         password: trolados456
 
-    - name: Build and push PostgreSQL image
+    - name: Build and push app image
       run: |
-        docker-compose -f ./docker-compose.yml build postgres
-        docker tag $(docker-compose -f ./docker-compose.yml images -q postgres) matheuswenes/postgresql:latest
+        docker build -t matheuswenes/app:latest .
+        docker push matheuswenes/app:latest
+
+    - name: Pull PostgreSQL image
+      run: docker pull bitnami/postgresql:latest
+
+    - name: Tag and push PostgreSQL image
+      run: |
+        docker tag bitnami/postgresql:latest matheuswenes/postgresql:latest
         docker push matheuswenes/postgresql:latest
 
-    - name: Build and push MongoDB image
+    - name: Pull MongoDB image
+      run: docker pull mongo:latest
+
+    - name: Tag and push MongoDB image
       run: |
-        docker-compose -f ./docker-compose.yml build mongo
-        docker tag $(docker-compose -f ./docker-compose.yml images -q mongo) matheuswenes/mongo:latest
+        docker tag mongo:latest matheuswenes/mongo:latest
         docker push matheuswenes/mongo:latest
