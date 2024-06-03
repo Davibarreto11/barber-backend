@@ -1,16 +1,5 @@
 version: "3"
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: app
-    ports:
-      - "3000:3000"
-    depends_on:
-      - postgres-db
-      - mongo-db
-
   postgres-db:
     image: bitnami/postgresql:latest
     container_name: postgres-db
