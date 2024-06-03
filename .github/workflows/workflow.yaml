@@ -20,12 +20,3 @@ jobs:
         run: npm run test
       - name: build
         run: npm run build
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username:  matheuswenes
-          password:  trolados456
-  
-      - name: Verify Docker Login
-        run: docker info
-
